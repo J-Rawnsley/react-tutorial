@@ -9,6 +9,7 @@ const topBooks = [
     title: "Dog Man: Twenty Thousand Fleas Under the Sea",
     imgLink: "./images/dog-man-cover.jpg",
     imgDesc: "A book cover showing a cartoon dog riding on a submarine",
+    id: 1,
   },
   {
     author: "James Clear",
@@ -17,48 +18,45 @@ const topBooks = [
     imgLink: "./images/atomic-habits-cover.jpg",
     imgDesc:
       "Book cover with the title 'atomic habits' in orange on a yellow background",
+    id: 2,
   },
   {
     author: "Peter Attia MD, Bill Gifford",
     title: "Outlive: The Science and Art of Longevity",
     imgLink: "./images/outlive-cover.jpg",
     imgDesc: "Book cover with the book title on a multi-coloured background",
+    id: 3,
   },
 ];
 
 function BookList() {
   return (
     <section className="booklist">
-      <Book
-        title={topBooks[0].title}
-        author={topBooks[0].author}
-        imgLink={topBooks[0].imgLink}
-        imgDesc={topBooks[0].imgDesc}
-      />
-      <Book
-        title={topBooks[1].title}
-        author={topBooks[1].author}
-        imgLink={topBooks[1].imgLink}
-        imgDesc={topBooks[1].imgDesc}
-      />
-      <Book
-        title={topBooks[2].title}
-        author={topBooks[2].author}
-        imgLink={topBooks[2].imgLink}
-        imgDesc={topBooks[2].imgDesc}
-      />
+      {topBooks.map((book) => {
+        let { title, author, imgLink, imgDesc, id } = book;
+        return (
+          <Book
+            title={title}
+            author={author}
+            imgLink={imgLink}
+            imgDesc={imgDesc}
+            key={id}
+          />
+        );
+      })}
     </section>
   );
 }
 
 const Book = (props) => {
   console.log(props);
-  const { imgLink, imgDesc, title, author } = props;
+  const { imgLink, imgDesc, title, author, children } = props;
   return (
     <article className="book">
       <img src={imgLink} alt={imgDesc} />
       <h2>{title}</h2>
       <h4>{author}</h4>
+      {children}
     </article>
   );
 };
