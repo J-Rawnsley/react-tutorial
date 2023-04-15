@@ -29,8 +29,11 @@ const bookData = [
   },
 ];
 
+function EventExamples() {
+  return <h1>Events</h1>
+};
+
 function BookFormat(props) {
-  console.log(props);
   const { imgLink, imgDesc, title, author, children } = props;
   return (
     <article className="book">
@@ -43,14 +46,9 @@ function BookFormat(props) {
 };
 
 const dataMap = (data) => data.map((book) => {
-  let { title, author, imgLink, imgDesc, id } = book;
   return (
     <BookFormat
-      title={title}
-      author={author}
-      imgLink={imgLink}
-      imgDesc={imgDesc}
-      key={id}
+      {...book} key = {book.id}
     />
   );
 });
@@ -58,11 +56,13 @@ const dataMap = (data) => data.map((book) => {
 function CreateBookList() {
   return (
     <section className="booklist">
+      <EventExamples/>
       {dataMap(bookData)}
     </section>
   );
 }
 
+console.log(dataMap(bookData))
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(<CreateBookList />);
