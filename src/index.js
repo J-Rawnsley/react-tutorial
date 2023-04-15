@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 
-const topBooks = [
+const bookData = [
   {
     author: "Joe Pilkey",
     title: "Dog Man: Twenty Thousand Fleas Under the Sea",
@@ -29,26 +29,7 @@ const topBooks = [
   },
 ];
 
-function BookList() {
-  return (
-    <section className="booklist">
-      {topBooks.map((book) => {
-        let { title, author, imgLink, imgDesc, id } = book;
-        return (
-          <Book
-            title={title}
-            author={author}
-            imgLink={imgLink}
-            imgDesc={imgDesc}
-            key={id}
-          />
-        );
-      })}
-    </section>
-  );
-}
-
-const Book = (props) => {
+function BookFormat(props) {
   console.log(props);
   const { imgLink, imgDesc, title, author, children } = props;
   return (
@@ -61,20 +42,27 @@ const Book = (props) => {
   );
 };
 
-const testFunc = (arg1, arg2) => {
-  console.log(`the first argument is ${arg1} and the second is ${arg2}.`);
-};
+const dataMap = (data) => data.map((book) => {
+  let { title, author, imgLink, imgDesc, id } = book;
+  return (
+    <BookFormat
+      title={title}
+      author={author}
+      imgLink={imgLink}
+      imgDesc={imgDesc}
+      key={id}
+    />
+  );
+});
 
-testFunc("a banana", "a potato");
-
-// function Greeting() {
-//   return React.createElement(
-//     "div",
-//     {},
-//     React.createElement(React.createElement("h2", {}, "hello world"))
-//   );
-// }
+function CreateBookList() {
+  return (
+    <section className="booklist">
+      {dataMap(bookData)}
+    </section>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<BookList />);
+root.render(<CreateBookList />);
