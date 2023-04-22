@@ -29,62 +29,29 @@ const bookData = [
   },
 ];
 
-function EventExamples() {
-  const handleFormInput = (e) => {
-    console.log("changed");
-  };
-  const handleButtonClick = (e) => {
-    alert(e.timeStamp)
-  }
-  const handleFormSubmission = (e) => {
-    e.preventDefault()
-    console.log("form submitted");
-    console.log(e.target.inputBox.value);
-  }
-  return (
-    <section>
-      <form onSubmit={handleFormSubmission}>
-      <h1>My Form</h1>
-      <input
-        type="text"
-        placeholder="please don't type here."
-        name="inputBox"
-        onChange={handleFormInput}
-        style={{ margin: "1rem 0" }}
-      ></input>
-      </form>
-      <button onClick = {handleButtonClick}>Don't Click the Button!</button>
-      </section>
-  );
-}
-
 function BookFormat(props) {
-  const { imgLink, imgDesc, title, author, children } = props;
+  const { imgLink, imgDesc, title, author, getBook, children, id } = props;
+  const logTitle = () => console.log(title);
   return (
     <article className="book">
       <img src={imgLink} alt={imgDesc} />
       <h2>{title}</h2>
       <h4>{author}</h4>
+      <button onClick={() => getBook(id)}>Log this book</button>
       {children}
     </article>
   );
 }
 
-const dataMap = (data) =>
-  data.map((book) => {
-    return <BookFormat {...book} key={book.id} />;
-  });
-
 function CreateBookList() {
-  return (
-    <section className="booklist">
-      <EventExamples />
-      {dataMap(bookData)}
-    </section>
-  );
+  const getBook = (id) => console.log(bookData.find((book) => book.id === id));
+  const dataMap = (data) =>
+    data.map((book) => {
+      return <BookFormat {...book} key={book.id} getBook={getBook} />;
+    });
+  return <section className="booklist">{dataMap(bookData)}</section>;
 }
 
-console.log(dataMap(bookData));
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(<CreateBookList />);
